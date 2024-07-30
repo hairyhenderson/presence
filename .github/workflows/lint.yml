@@ -1,0 +1,25 @@
+name: golangci-lint
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/hybridgroup/opencv:4.10.0
+    steps:
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          args: --verbose --max-same-issues=0 --max-issues-per-linter=0

@@ -1,0 +1,22 @@
+name: Build
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # only run on PRs targeting main
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/hybridgroup/opencv:4.10.0
+    steps:
+      - run: |
+          git config --global user.email "bogus@example.com"
+          git config --global user.name "Someone"
+      - uses: actions/checkout@v4
+      - run: make test
